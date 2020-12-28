@@ -2,9 +2,26 @@ import React from 'react';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 
+import { ModalProfile } from '../index';
+
 export default function MenuProfile(props) {
     
     const isMenuOpen = Boolean(props.anchorEl);
+
+    const [open, setOpen] = React.useState(false);
+
+    const handleModalOpen = () => {
+        setOpen(true);
+    };
+
+    const handleModalClose = () => {
+        setOpen(false);
+    };
+
+    function handelProfile(){
+        props.handleMenuClose();
+        handleModalOpen();
+    }
 
     const menuId = 'primary-search-account-menu';
     const renderMenu = (
@@ -17,14 +34,19 @@ export default function MenuProfile(props) {
             open={isMenuOpen}
             onClose={props.handleMenuClose}
         >
-            <MenuItem onClick={props.handleMenuClose}>Profile</MenuItem>
-            <MenuItem onClick={props.handleMenuClose}>My account</MenuItem>
+            <MenuItem onClick={handelProfile}>Perfil</MenuItem>
+            <MenuItem onClick={props.handleMenuClose}>Cerrar Sesion</MenuItem>
         </Menu>
     );
 
   return (
     <>
         {renderMenu}
+        <ModalProfile
+            open={open} 
+            handleOpen={handleModalOpen}
+            handleClose={handleModalClose}
+        />
     </>
   );
 }

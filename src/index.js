@@ -20,4 +20,5 @@ reportWebVitals();
 export { default as PrimarySearchAppBar } from './components/PrimarySearchAppBar';
 export { default as MenuNombreRutas } from './components/MenuNombreRutas';
 export { default as MenuProfile } from './components/MenuProfile';
+export { default as ModalProfile } from './components/ModalProfile';
 export { default as UserIcon } from './assets/icons/user.png';

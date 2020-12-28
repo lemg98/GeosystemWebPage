@@ -4,7 +4,7 @@ import L from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 
-import { PrimarySearchAppBar, UserIcon } from '../index';
+import { PrimarySearchAppBar } from '../index';
 
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
