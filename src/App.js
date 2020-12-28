@@ -1,25 +1,23 @@
-import logo from './logo.svg';
+import './App.css';
+import React from "react";
+import { createBrowserHistory } from "history";
+import { Router, Route, Switch } from "react-router-dom";
 import './App.css';
 
-function App() {
+import ProtectedRoute from './components/ProtectedRoute';
+
+// Sección de screens
+import LoginScreen from './screens/LoginScreen';
+import AdminScreen from './screens/AdminScreen';
+import MapScreen from './screens/MapScreen';
+
+var hist = createBrowserHistory();
+
+export default function App(props) {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    //<LoginScreen/>
+    <MapScreen />
   );
 }
 
-export default App;
+
