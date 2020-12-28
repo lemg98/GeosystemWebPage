@@ -17,8 +17,8 @@ export default function MenuNombreRutas(props) {
             open={isMenuOpen}
             onClose={props.handleMenuClose}
         >
-            <MenuItem onClick={props.handleMenuClose}>Profile2</MenuItem>
-            <MenuItem onClick={props.handleMenuClose}>My account2</MenuItem>
+            <MenuItem onClick={props.handleMenuClose}>Ruta A</MenuItem>
+            <MenuItem onClick={props.handleMenuClose}>Ruta B</MenuItem>
         </Menu>
     );
 

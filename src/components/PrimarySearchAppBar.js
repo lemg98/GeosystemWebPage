@@ -11,7 +11,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import { MenuNombreRutas } from '../index';
+import { MenuNombreRutas, MenuProfile } from '../index';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -79,47 +79,26 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PrimarySearchAppBar() {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = React.useState(null);
 
-  const isMenuOpen = Boolean(anchorEl);
-  const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
+  //================================================================================//
+
+  {/* Componentes para el Menu del nombre de los perfiles de admins */}
+  const [anchorElProfile, setAnchorElProfile] = React.useState(null);
 
   const handleProfileMenuOpen = (event) => {
-    setAnchorEl(event.currentTarget);
+    setAnchorElProfile(event.currentTarget);
   };
 
-  const handleMobileMenuClose = () => {
-    setMobileMoreAnchorEl(null);
+  const handleMenuProfileClose = () => {
+    setAnchorElProfile(null);
   };
 
-  const handleMenuClose = () => {
-    setAnchorEl(null);
-    handleMobileMenuClose();
-  };
-
-
-  const menuId = 'primary-search-account-menu';
-  const renderMenu = (
-    <Menu
-      anchorEl={anchorEl}
-      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
-      id={menuId}
-      keepMounted
-      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
-      open={isMenuOpen}
-      onClose={handleMenuClose}
-    >
-      <MenuItem onClick={handleMenuClose}>Profile</MenuItem>
-      <MenuItem onClick={handleMenuClose}>My account</MenuItem>
-    </Menu>
-  );
-//=================================================================================
+//=================================================================================//
 
   {/* Componentes para el Menu del nombre de las Rutas */}
   const [anchorElRutas, setAnchorElRutas] = React.useState(null);
 
-  const handleProfileMenuRutasOpen = (event) => {
+  const handleMenuRutasOpen = (event) => {
     setAnchorElRutas(event.currentTarget);
   };
 
@@ -127,22 +106,8 @@ export default function PrimarySearchAppBar() {
     setAnchorElRutas(null);
   };
 
-//=================================================================================
+//=================================================================================//
 
-
-  const mobileMenuId = 'primary-search-account-menu-mobile';
-  const renderMobileMenu = (
-    <IconButton
-      edge="end"
-      aria-label="account of current user"
-      aria-controls={menuId}
-      aria-haspopup="true"
-      onClick={handleProfileMenuOpen}
-      color="inherit"
-    >
-      <AccountCircle />
-    </IconButton>
-  );
 
   return (
     <div className={classes.grow}>
@@ -153,7 +118,7 @@ export default function PrimarySearchAppBar() {
             className={classes.menuButton}
             color="inherit"
             aria-label="open drawer"
-            onClick={handleProfileMenuRutasOpen}
+            onClick={handleMenuRutasOpen}
           >
             <MenuIcon />
           </IconButton>
@@ -174,23 +139,10 @@ export default function PrimarySearchAppBar() {
             />
           </div>
           <div className={classes.grow} />
-          <div className={classes.sectionDesktop}>
+          <div className={classes.menuButton}>
           <IconButton
               edge="end"
               aria-label="account of current user"
-              aria-controls={menuId}
-              aria-haspopup="true"
-              onClick={handleProfileMenuOpen}
-              color="inherit"
-            >
-              <AccountCircle />
-            </IconButton>
-          </div>
-          <div className={classes.sectionMobile}>
-            <IconButton
-              edge="end"
-              aria-label="account of current user"
-              aria-controls={menuId}
               aria-haspopup="true"
               onClick={handleProfileMenuOpen}
               color="inherit"
@@ -200,7 +152,10 @@ export default function PrimarySearchAppBar() {
           </div>
         </Toolbar>
       </AppBar>
-      {renderMenu}
+      <MenuProfile 
+        anchorEl={anchorElProfile} 
+        handleMenuClose={handleMenuProfileClose}
+      />
       <MenuNombreRutas 
         anchorEl={anchorElRutas} 
         handleMenuClose={handleMenuRutasClose}
