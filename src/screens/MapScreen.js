@@ -43,8 +43,8 @@ export default function MapScreen(){
     const[routes,setRoutes] = useState([]);
 
 
-    useEffect(function(){
-        var routes = fetchRoutes(); 
+    useEffect(async function(){
+        var routes = await fetchRoutes(); 
         setRoutes(routes);
     }
     ,[])
@@ -52,7 +52,7 @@ export default function MapScreen(){
     return (
         <div>
             <p style={{padding: '15px'}}/>
-            <PrimarySearchAppBar/>
+            <PrimarySearchAppBar routes={routes}/>
             <Button 
                 color='primary'
                 variant="contained" 

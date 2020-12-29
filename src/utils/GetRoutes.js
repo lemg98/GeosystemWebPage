@@ -14,10 +14,9 @@ export async function fetchRoutes(){
         alert("No se pudo cargar los datos");
     });
     routes.sort(function(a,b){
-        if (a.toString().toLowerCase() < b.toString().toLowerCase()) return -1;
-        if (a.toString().toLowerCase() == b.toString().toLowerCase()) return -1;
-        if (a.toString().toLowerCase() > b.toString().toLowerCase()) return -1;
+        if (a['Nombre'].toString().toLowerCase() < b['Nombre'].toString().toLowerCase()) return -1;
+        if (a['Nombre'].toString().toLowerCase() == b['Nombre'].toString().toLowerCase()) return 0;
+        if (a['Nombre'].toString().toLowerCase() > b['Nombre'].toString().toLowerCase()) return 1;
     });
-
     return routes;
 }

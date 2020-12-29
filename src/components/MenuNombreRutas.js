@@ -17,8 +17,16 @@ export default function MenuNombreRutas(props) {
             open={isMenuOpen}
             onClose={props.handleMenuClose}
         >
-            <MenuItem onClick={props.handleMenuClose}>Ruta A</MenuItem>
-            <MenuItem onClick={props.handleMenuClose}>Ruta B</MenuItem>
+            {props.routes.map(function(item, idx){
+                return (
+                    <MenuItem 
+                        key={idx} 
+                        onClick={props.handleMenuClose}
+                    >
+                        {item['Nombre']}
+                    </MenuItem>
+                );
+            })}
         </Menu>
     );
 

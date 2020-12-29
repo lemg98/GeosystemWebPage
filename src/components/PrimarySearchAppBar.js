@@ -5,8 +5,6 @@ import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import InputBase from '@material-ui/core/InputBase';
-import MenuItem from '@material-ui/core/MenuItem';
-import Menu from '@material-ui/core/Menu';
 import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
@@ -77,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PrimarySearchAppBar() {
+export default function PrimarySearchAppBar(props) {
   const classes = useStyles();
 
   //================================================================================//
@@ -120,7 +118,7 @@ export default function PrimarySearchAppBar() {
             aria-label="open drawer"
             onClick={handleMenuRutasOpen}
           >
-            <MenuIcon />
+            <MenuIcon/>
           </IconButton>
           <Typography className={classes.title} variant="h6" noWrap>
             RUTAS
@@ -159,6 +157,7 @@ export default function PrimarySearchAppBar() {
       <MenuNombreRutas 
         anchorEl={anchorElRutas} 
         handleMenuClose={handleMenuRutasClose}
+        routes={props.routes}
       />
     </div>
   );
