@@ -1,10 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 
 import 'leaflet/dist/leaflet.css';
 
 import { PrimarySearchAppBar } from '../index';
+
+import { fetchRoutes } from '../utils/GetRoutes';
 
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -25,7 +27,14 @@ const limeOptions = { color: 'purple' }
 
 
 export default function MapScreen(){    
-        
+   
+    const[routes,setRoutes] = useState([]);
+
+    useEffect(function(){
+        var routes = fetchRoutes(); 
+        setRoutes(routes);
+    }
+    ,[])
 
     return (
         <>
