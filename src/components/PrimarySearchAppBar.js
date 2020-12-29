@@ -1,4 +1,4 @@
-import React from 'react';
+import React,{useState} from 'react';
 import { fade, makeStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -99,7 +99,9 @@ export default function PrimarySearchAppBar(props) {
   const handleMenuRutasOpen = (event) => {
     setAnchorElRutas(event.currentTarget);
   };
-
+  const handleRouteSelected = (idx) => {
+    props.handleRouteSelected(idx);
+  };
   const handleMenuRutasClose = () => {
     setAnchorElRutas(null);
   };
@@ -158,6 +160,7 @@ export default function PrimarySearchAppBar(props) {
         anchorEl={anchorElRutas} 
         handleMenuClose={handleMenuRutasClose}
         routes={props.routes}
+        handleRouteSelected={handleRouteSelected}
       />
     </div>
   );

@@ -6,12 +6,18 @@ export default function MenuNombreRutas(props) {
     
     const isMenuOpen = Boolean(props.anchorEl);
 
-    const menuId2 = 'primary-search-account-menu2';
-    const renderMenu2 = (
+    function handleRouteSelected(idx){
+        props.handleMenuClose();
+        // Index of route
+        props.handleRouteSelected(idx);
+    }
+
+    const menuId = 'primary-search-account-menu';
+    const renderMenu = (
         <Menu
             anchorEl={props.anchorEl}
             anchorOrigin={{ vertical: 'top', horizontal: 'left' }}
-            id={menuId2}
+            id={menuId}
             keepMounted
             transformOrigin={{ vertical: 'top', horizontal: 'left' }}
             open={isMenuOpen}
@@ -21,7 +27,7 @@ export default function MenuNombreRutas(props) {
                 return (
                     <MenuItem 
                         key={idx} 
-                        onClick={props.handleMenuClose}
+                        onClick={handleRouteSelected.bind(this, idx)}
                     >
                         {item['Nombre']}
                     </MenuItem>
@@ -32,7 +38,7 @@ export default function MenuNombreRutas(props) {
 
   return (
     <>
-        {renderMenu2}
+        {renderMenu}
     </>
   );
 }

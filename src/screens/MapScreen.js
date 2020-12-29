@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 
-import Button from '@material-ui/core/Button';
+import { Button } from '@material-ui/core';
                                 
 import 'leaflet/dist/leaflet.css';
 
@@ -40,8 +40,13 @@ const RouteNameStyle = {
 
 export default function MapScreen(){    
    
-    const[routes,setRoutes] = useState([]);
+    const [routes,setRoutes] = useState([]);
+    const [routeName,setRouteName] = useState('Ruta');
 
+    function handleRouteSelected(idx){
+        var route = routes[idx];
+        setRouteName(route['Nombre']);
+    }
 
     useEffect(async function(){
         var routes = await fetchRoutes(); 
@@ -52,16 +57,19 @@ export default function MapScreen(){
     return (
         <div>
             <p style={{padding: '15px'}}/>
-            <PrimarySearchAppBar routes={routes}/>
+            <PrimarySearchAppBar 
+                routes={routes}
+                handleRouteSelected={handleRouteSelected}    
+            />
             <Button 
                 color='primary'
                 variant="contained" 
                 disableRipple 
+                disableFocusRipple
                 style={RouteNameStyle}
-                startIcon={<DirectionsIcon />
-                }
+                startIcon={<DirectionsIcon />}
             >
-                Ruta
+                {routeName}
             </Button>
             <MapContainer center={[20.52374172943338, -100.81533087219081]} zoom={14} scrollWheelZoom={true}>
                 <TileLayer
