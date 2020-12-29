@@ -2,11 +2,15 @@ import React, { useEffect, useState } from "react";
 import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
 import L from 'leaflet';
 
+import Button from '@material-ui/core/Button';
+                                
 import 'leaflet/dist/leaflet.css';
 
 import { PrimarySearchAppBar } from '../index';
 
 import { fetchRoutes } from '../utils/GetRoutes';
+
+import DirectionsIcon from '@material-ui/icons/Directions';
 
 import icon from 'leaflet/dist/images/marker-icon.png';
 import iconShadow from 'leaflet/dist/images/marker-shadow.png';
@@ -25,10 +29,19 @@ const polyline = [
 ]
 const limeOptions = { color: 'purple' }
 
+const RouteNameStyle = {
+    position: 'absolute', 
+    left: '50%', 
+    top: '80%',
+    transform: 'translate(-50%, -50%)',
+    zIndex: 1,
+}
+
 
 export default function MapScreen(){    
    
     const[routes,setRoutes] = useState([]);
+
 
     useEffect(function(){
         var routes = fetchRoutes(); 
@@ -37,18 +50,28 @@ export default function MapScreen(){
     ,[])
 
     return (
-        <>
-        <p style={{padding: '15px'}}/>
-        <PrimarySearchAppBar/>
-        <MapContainer center={[20.52374172943338, -100.81533087219081]} zoom={14} scrollWheelZoom={true}>
-            <TileLayer
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            />
-            <Marker position={[20.52374172943338, -100.81533087219081]}/>
-            <Polyline pathOptions={limeOptions} positions={polyline} />   
-        </MapContainer>
-        </>
+        <div>
+            <p style={{padding: '15px'}}/>
+            <PrimarySearchAppBar/>
+            <Button 
+                color='primary'
+                variant="contained" 
+                disableRipple 
+                style={RouteNameStyle}
+                startIcon={<DirectionsIcon />
+                }
+            >
+                Ruta
+            </Button>
+            <MapContainer center={[20.52374172943338, -100.81533087219081]} zoom={14} scrollWheelZoom={true}>
+                <TileLayer
+                    attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+                    url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+                />
+                <Marker position={[20.52374172943338, -100.81533087219081]}/>
+                <Polyline pathOptions={limeOptions} positions={polyline} />   
+            </MapContainer>
+        </div>
         );
 }
         
