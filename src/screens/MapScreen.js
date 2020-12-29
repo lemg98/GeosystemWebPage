@@ -32,7 +32,7 @@ const limeOptions = { color: 'purple' }
 const RouteNameStyle = {
     position: 'absolute', 
     left: '50%', 
-    top: '80%',
+    top: '90%',
     transform: 'translate(-50%, -50%)',
     zIndex: 1,
 }
