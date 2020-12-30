@@ -7,6 +7,7 @@ import { Button } from '@material-ui/core';
 import 'leaflet/dist/leaflet.css';
 
 import { PrimarySearchAppBar } from '../index';
+import { iconBus } from '../components/Icons';
 
 import { fetchRoutes } from '../utils/GetRoutes';
 
@@ -78,7 +79,9 @@ export default function MapScreen(){
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={[20.54374172943338, -100.81533087219081]}>
+                <Marker 
+                    position={[20.54374172943338, -100.81533087219081]}
+                    icon={ iconBus }>
                     <Popup>A pretty pop up</Popup>
                 </Marker>
                 <Polyline pathOptions={limeOptions} positions={polyline} />
