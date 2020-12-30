@@ -1,25 +1,17 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Polyline, Popup, useMap } from 'react-leaflet';
-import L from 'leaflet';
 
-import { Button } from '@material-ui/core';
-                                
+import { MapContainer, TileLayer, Polyline, useMap } from 'react-leaflet';
 import 'leaflet/dist/leaflet.css';
 
-import { PrimarySearchAppBar } from '../index';
-import { iconBus } from '../components/Icons';
+import { Button } from '@material-ui/core';
+import DirectionsIcon from '@material-ui/icons/Directions';
+                                
+// Components
+import { PrimarySearchAppBar, BusStops, Buses } from '../index';
 
 import { fetchRoutes } from '../utils/GetRoutes';
 
-import DirectionsIcon from '@material-ui/icons/Directions';
-import { MapOutlined } from "@material-ui/icons";
-
-const polyline = [
-    [20.54031977451501, -100.82035201722248],
-    [20.531237237766984, -100.81889289558936],
-    [20.53099610112393, -100.81275600166177],
-]
-const limeOptions = { color: 'purple' }
+const limeOptions = { color: '#01497c'};
 
 const RouteNameStyle = {
     position: 'absolute', 
@@ -35,6 +27,11 @@ export default function MapScreen(){
     const [routes,setRoutes] = useState([]);
     const [routeName,setRouteName] = useState('Ruta');
     const [regionCoords,setRegionCoords] = useState([20.52374172943338, -100.81533087219081]);
+    const [routeLine,setRouteLine] = useState([]);
+    const [stopsCoords,setStopsCoords] = useState([]);
+    const [stopsNames,setStopsNames] = useState([]);
+    const [choferes,setChoferes] = useState([]);
+
 
     function handleRouteSelected(idx){
         var route = routes[idx];
@@ -42,6 +39,25 @@ export default function MapScreen(){
 
         var region = route['RegionInicial'];
         setRegionCoords([region.latitude, region.longitude]);
+        
+        var polyline = [];
+        for(var coords of route['Coordenada']){
+            polyline.push([coords.latitude, coords.longitude]);
+        }
+        setRouteLine(polyline);
+
+        var stopsCoords = [];
+        var stopsNames = [];
+        for(var coords of route['StopsLocation']){
+            stopsCoords.push([coords.latitude, coords.longitude]);
+        } 
+        for(var name of route['StopsNombre']){
+            stopsNames.push(name);
+        }
+        setStopsCoords(stopsCoords);
+        setStopsNames(stopsNames);
+
+        setChoferes(route['choferes']);
     }   
 
     useEffect(async function(){
@@ -79,12 +95,10 @@ export default function MapScreen(){
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker 
-                    position={[20.54374172943338, -100.81533087219081]}
-                    icon={ iconBus }>
-                    <Popup>A pretty pop up</Popup>
-                </Marker>
-                <Polyline pathOptions={limeOptions} positions={polyline} />
+
+                <BusStops coords={stopsCoords} names={stopsNames}/>
+                <Buses choferes={choferes}/>
+                <Polyline pathOptions={limeOptions} positions={routeLine} />
                 
                 {/* Hooks of the map */}   
                 <RegionChangeEvent center={regionCoords}/>
