@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { MapContainer, TileLayer, Marker, Polyline } from 'react-leaflet';
+import { MapContainer, TileLayer, Marker, Polyline, Popup, useMap } from 'react-leaflet';
 import L from 'leaflet';
 
 import { Button } from '@material-ui/core';
@@ -11,16 +11,7 @@ import { PrimarySearchAppBar } from '../index';
 import { fetchRoutes } from '../utils/GetRoutes';
 
 import DirectionsIcon from '@material-ui/icons/Directions';
-
-import icon from 'leaflet/dist/images/marker-icon.png';
-import iconShadow from 'leaflet/dist/images/marker-shadow.png';
-
-let DefaultIcon = L.icon({
-    iconUrl: icon,
-    shadowUrl: iconShadow,
-});
-
-L.Marker.prototype.options.icon = DefaultIcon;
+import { MapOutlined } from "@material-ui/icons";
 
 const polyline = [
     [20.54031977451501, -100.82035201722248],
@@ -42,17 +33,28 @@ export default function MapScreen(){
    
     const [routes,setRoutes] = useState([]);
     const [routeName,setRouteName] = useState('Ruta');
+    const [regionCoords,setRegionCoords] = useState([20.52374172943338, -100.81533087219081]);
 
     function handleRouteSelected(idx){
         var route = routes[idx];
         setRouteName(route['Nombre']);
-    }
+
+        var region = route['RegionInicial'];
+        setRegionCoords([region.latitude, region.longitude]);
+    }   
 
     useEffect(async function(){
         var routes = await fetchRoutes(); 
         setRoutes(routes);
     }
     ,[])
+
+    function RegionChangeEvent() {
+        const map = useMap();
+        map.flyTo(regionCoords, map.getZoom())
+        return null;
+    }
+      
 
     return (
         <div>
@@ -71,13 +73,18 @@ export default function MapScreen(){
             >
                 {routeName}
             </Button>
-            <MapContainer center={[20.52374172943338, -100.81533087219081]} zoom={14} scrollWheelZoom={true}>
+            <MapContainer center={regionCoords} zoom={14} scrollWheelZoom={true}>
                 <TileLayer
                     attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
                     url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
                 />
-                <Marker position={[20.52374172943338, -100.81533087219081]}/>
-                <Polyline pathOptions={limeOptions} positions={polyline} />   
+                <Marker position={[20.54374172943338, -100.81533087219081]}>
+                    <Popup>A pretty pop up</Popup>
+                </Marker>
+                <Polyline pathOptions={limeOptions} positions={polyline} />
+                
+                {/* Hooks of the map */}   
+                <RegionChangeEvent center={regionCoords}/>
             </MapContainer>
         </div>
         );
