@@ -13,40 +13,44 @@ export default function Buses(props){
     
     const [timer,setTimer] = useState(null);
 
-    const c1 = [20.52374172943338, -100.81533087219081];
-    const c2 = [20.52674172943338, -100.81533087219081];
+    const [coords,setCoords] = useState([]);
 
-    const [coords,setCoords] = useState(c1);
-    
     useEffect(function() {
 
+        setCoords([]);
         if(props.choferes.length > 0){     
             if(timer !== null) clearInterval(timer);
             setTimer(setInterval(function(){
                 getBusesCoords();
-            }, 4*SECONDS));
+            }, 3*SECONDS));
         }
     },[props.choferes]);
 
-    const [name,setName] = useState('ok');
+    const [names,setNames] = useState('ok');
 
     async function getBusesCoords(){
         
         if(props.choferes.length == 0) return;
 
         var buses = await fetchBuses(props.choferes);
-        setName(prev => buses[0]);
-/*        //setCoords(prev => auxArray);
-    */
+        setCoords(prev => buses.coords);
+        setNames(prev => buses.names);
     };
 
     return (
         <>
-            <Marker
-                position={coords}
-                icon={iconBus}>
-                    <Popup>{name}</Popup>
-            </Marker>   
+            {coords.map(function(item, idx){
+                    return(
+                        <Marker
+                            key={idx}
+                            position={item}
+                            icon={iconBus}
+                        >
+                            <Popup>{names[idx]}</Popup>
+                        </Marker>
+                    );
+                }
+            )}
         </>
         );
 }

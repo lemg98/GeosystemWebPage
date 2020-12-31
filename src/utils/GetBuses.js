@@ -1,15 +1,18 @@
 export async function fetchBuses(choferes){
 
-    var auxArray = [];
+    var coords = [];
+    var names = [];
     for(var chofer of choferes) {
         await chofer.get()
         .then(function(doc){
-            //auxArray.push(doc.data().Posicion);
-            auxArray.push(doc.data().Nombre);
+            var {latitude, longitude} = doc.data().Posicion;
+            var { Nombre } = doc.data();
+            coords.push([latitude, longitude]);
+            names.push(Nombre);
         })
         .catch(function(error) {
                 alert("Carga erronea de datos de autobuses.");
         })
     }
-    return auxArray;
+    return {coords: coords, names: names};
 }
