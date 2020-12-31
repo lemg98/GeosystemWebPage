@@ -9,7 +9,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import SearchIcon from '@material-ui/icons/Search';
 import AccountCircle from '@material-ui/icons/AccountCircle';
 
-import { MenuNombreRutas, MenuProfile } from '../index';
+import { MenuNombreRutas, MenuProfile, MenuSearch } from '../index';
 
 const useStyles = makeStyles((theme) => ({
   grow: {
@@ -129,8 +129,9 @@ export default function PrimarySearchAppBar(props) {
             <div className={classes.searchIcon}>
               <SearchIcon />
             </div>
-            <InputBase
-              placeholder="Search…"
+            <MenuSearch 
+              routes={props.routes}
+              handleRouteSelected={handleRouteSelected}
               classes={{
                 root: classes.inputRoot,
                 input: classes.inputInput,
