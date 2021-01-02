@@ -1,7 +1,8 @@
 import React,{ useState } from 'react';
 import SignIn from '../components/SignIn';
 import AdminScreen from './AdminScreen';
-import { firebaseApp } from '../ConfigFirebase';
+import { userSignIn } from '../utils/FirebaseAPI';
+
 
 export default function LoginScreen() {
 
@@ -10,22 +11,7 @@ export default function LoginScreen() {
    const [invalidPassword,setInvalidPassword] = useState(false);
 
    function handleLogIn(user){
-
-   firebaseApp.auth().signInWithEmailAndPassword(user.email, user.password)
-   .then((user) => {
-      setUser(user);    
-      setIsAuthenticated(true);
-      setInvalidEmail(false);
-      setInvalidPassword(false);
-   })
-   .catch((error) => {
-      setInvalidEmail(false);
-      setInvalidPassword(false);
-   if (error.code == 'auth/invalid-email' || error.code == 'auth/user-not-found')
-      setInvalidEmail(true);
-   else if (error.code == 'auth/wrong-password')
-      setInvalidPassword(true);
-   });  
+      userSignIn(user,setUser,setInvalidEmail,setInvalidPassword,setIsAuthenticated);
    }
 
    const [isAuthenticated, setIsAuthenticated] = useState(false);

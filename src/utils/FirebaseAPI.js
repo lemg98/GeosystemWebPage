@@ -1,4 +1,4 @@
-import {db} from "../ConfigFirebase";
+import {db,firebaseApp} from "../ConfigFirebase";
 
 export async function fetchRoutes(){
     var routes = [];
@@ -40,3 +40,38 @@ export async function fetchBuses(choferes){
    return {coords: coords, names: names};
 }
 
+
+export async function userSignIn(user, setUser, setInvalidEmail, setInvalidPassword, setIsAuthenticated ){
+   
+   setInvalidEmail(false);
+   setInvalidPassword(false);
+
+   var admin = true;
+   var {email} = user;
+   await db.collection("admins")
+      .where('Email', '==', email)
+      .get()
+      .then(function(querySnapshot){
+         if(!querySnapshot.size){
+            setInvalidEmail(true);
+            admin = false;
+         }
+      })
+      .catch(error => alert('No es posible cargas los usuarios de la base de datos.'));   
+   
+   if(!admin) return;
+
+   firebaseApp.auth().signInWithEmailAndPassword(user.email, user.password)
+   .then((user) => {
+      setUser(user);    
+      setIsAuthenticated(true);
+      setInvalidEmail(false);
+      setInvalidPassword(false);
+   })
+   .catch((error) => {   
+      if (error.code == 'auth/invalid-email' || error.code == 'auth/user-not-found')
+         setInvalidEmail(true);
+      else if (error.code == 'auth/wrong-password')
+         setInvalidPassword(true);
+   });  
+}
