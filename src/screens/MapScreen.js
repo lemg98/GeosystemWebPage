@@ -80,6 +80,7 @@ export default function MapScreen(props){
                routes={routes}
                handleRouteSelected={handleRouteSelected}    
                user={props.userData}
+               handleSignOut={props.handleSignOut}
             />
             <Button 
                 color='primary'

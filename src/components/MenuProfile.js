@@ -35,7 +35,7 @@ export default function MenuProfile(props) {
             onClose={props.handleMenuClose}
         >
             <MenuItem onClick={handelProfile}>Perfil</MenuItem>
-            <MenuItem onClick={props.handleMenuClose}>Cerrar Sesion</MenuItem>
+            <MenuItem onClick={props.handleSignOut}>Cerrar Sesion</MenuItem>
         </Menu>
     );
 

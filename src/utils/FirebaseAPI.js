@@ -78,3 +78,13 @@ export async function userSignIn(user, setUser, setInvalidEmail, setInvalidPassw
          setInvalidPassword(true);
    });  
 }
+
+export async function userSignOut(setUser, setIsAuthenticated){
+   firebaseApp.auth().signOut().then(function() {
+      setUser(null);
+      setIsAuthenticated(false);
+   }).catch(function(error) {
+      alert('No pudimos cerrar tu sesión, comprueba tu conexión a internet.');
+      alert(error);
+   });    
+}

@@ -1,7 +1,7 @@
 import React,{ useState } from 'react';
 import SignIn from '../components/SignIn';
 import AdminScreen from './AdminScreen';
-import { userSignIn } from '../utils/FirebaseAPI';
+import { userSignIn,userSignOut } from '../utils/FirebaseAPI';
 
 
 export default function LoginScreen() {
@@ -15,6 +15,10 @@ export default function LoginScreen() {
       userSignIn(user,setUser,setInvalidEmail,setInvalidPassword,setIsAuthenticated, setData);
    }
 
+   function handleSignOut(){
+      userSignOut(setUser,setIsAuthenticated);
+   }
+
    const [isAuthenticated, setIsAuthenticated] = useState(false);
 
 
@@ -22,10 +26,16 @@ export default function LoginScreen() {
       <div>
          { !isAuthenticated ? 
             <SignIn 
-            handleLogIn={handleLogIn}
-            invalidEmail={invalidEmail}
-            invalidPassword={invalidPassword}
-            /> : <AdminScreen userFirebase={user} userData={data}/> } 
+               handleLogIn={handleLogIn}
+               invalidEmail={invalidEmail}
+               invalidPassword={invalidPassword}
+            /> 
+            : 
+            <AdminScreen 
+               userFirebase={user} 
+               userData={data}
+               handleSignOut={handleSignOut}
+            /> } 
       </div>
    );
 }
