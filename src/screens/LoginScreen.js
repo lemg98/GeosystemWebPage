@@ -7,11 +7,12 @@ import { userSignIn } from '../utils/FirebaseAPI';
 export default function LoginScreen() {
 
    const [user,setUser] = useState(null);
+   const [data,setData] = useState(null);
    const [invalidEmail,setInvalidEmail] = useState(false);
    const [invalidPassword,setInvalidPassword] = useState(false);
 
    function handleLogIn(user){
-      userSignIn(user,setUser,setInvalidEmail,setInvalidPassword,setIsAuthenticated);
+      userSignIn(user,setUser,setInvalidEmail,setInvalidPassword,setIsAuthenticated, setData);
    }
 
    const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -24,7 +25,7 @@ export default function LoginScreen() {
             handleLogIn={handleLogIn}
             invalidEmail={invalidEmail}
             invalidPassword={invalidPassword}
-            /> : <AdminScreen user={user}/> } 
+            /> : <AdminScreen userFirebase={user} userData={data}/> } 
       </div>
    );
 }

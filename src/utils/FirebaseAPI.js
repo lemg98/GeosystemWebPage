@@ -41,7 +41,7 @@ export async function fetchBuses(choferes){
 }
 
 
-export async function userSignIn(user, setUser, setInvalidEmail, setInvalidPassword, setIsAuthenticated ){
+export async function userSignIn(user, setUser, setInvalidEmail, setInvalidPassword, setIsAuthenticated, setData ){
    
    setInvalidEmail(false);
    setInvalidPassword(false);
@@ -55,6 +55,9 @@ export async function userSignIn(user, setUser, setInvalidEmail, setInvalidPassw
          if(!querySnapshot.size){
             setInvalidEmail(true);
             admin = false;
+         }
+         else{
+            setData(querySnapshot.docs[0].data());
          }
       })
       .catch(error => alert('No es posible cargas los usuarios de la base de datos.'));   

@@ -38,7 +38,7 @@ export default function ModalProfile(props) {
       <TextField
         id="outlined-read-only-input"
         label="Nombre"
-        defaultValue="Cesar"
+        defaultValue={props.user.Nombre}
         InputProps={{
           readOnly: true,
         }}
@@ -49,7 +49,7 @@ export default function ModalProfile(props) {
       <TextField
         id="outlined-read-only-input"
         label="Email"
-        defaultValue="lemg@gmail.com"
+        defaultValue={props.user.Email}
         InputProps={{
           readOnly: true,
         }}

@@ -1,15 +1,12 @@
 import React from "react";
 import MapScreen from "./MapScreen";
 
-class AdminScreen extends React.Component{
-    render(){
-        return (
-            <div>
-                <MapScreen/>
-            </div>
-        );
-    }
+export default function AdminScreen(props){
+   return (
+      <div>
+            <MapScreen userFirebase={props.userFirebase} userData={props.userData}/>
+      </div>
+   );
 }
 
-export default AdminScreen;
 

@@ -156,6 +156,7 @@ export default function PrimarySearchAppBar(props) {
       <MenuProfile 
         anchorEl={anchorElProfile} 
         handleMenuClose={handleMenuProfileClose}
+        user={props.user}
       />
       <MenuNombreRutas 
         anchorEl={anchorElRutas} 

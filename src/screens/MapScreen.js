@@ -22,7 +22,7 @@ const RouteNameStyle = {
 }
 
 
-export default function MapScreen(){    
+export default function MapScreen(props){    
    
     const [routes,setRoutes] = useState([]);
     const [routeName,setRouteName] = useState('Ruta');
@@ -77,8 +77,9 @@ export default function MapScreen(){
         <div>
             <p style={{padding: '15px'}}/>
             <PrimarySearchAppBar 
-                routes={routes}
-                handleRouteSelected={handleRouteSelected}    
+               routes={routes}
+               handleRouteSelected={handleRouteSelected}    
+               user={props.userData}
             />
             <Button 
                 color='primary'

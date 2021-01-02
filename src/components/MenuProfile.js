@@ -46,6 +46,7 @@ export default function MenuProfile(props) {
             open={open} 
             handleOpen={handleModalOpen}
             handleClose={handleModalClose}
+            user={props.user}
         />
     </>
   );
