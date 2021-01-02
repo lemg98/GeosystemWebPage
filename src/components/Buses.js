@@ -4,7 +4,7 @@ import { Marker, Popup } from 'react-leaflet';
 import { iconBus } from '../components/Icons';
 import 'leaflet/dist/leaflet.css';
 
-import { fetchBuses } from '../utils/GetBuses';
+import { fetchBuses } from '../utils/FirebaseAPI';
 
 
 const SECONDS = 1000;

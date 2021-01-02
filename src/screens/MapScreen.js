@@ -9,7 +9,7 @@ import DirectionsIcon from '@material-ui/icons/Directions';
 // Components
 import { PrimarySearchAppBar, BusStops, Buses } from '../index';
 
-import { fetchRoutes } from '../utils/GetRoutes';
+import { fetchRoutes } from '../utils/FirebaseAPI';
 
 const limeOptions = { color: '#01497c'};
 

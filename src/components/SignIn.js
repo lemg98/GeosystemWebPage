@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -9,6 +9,7 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+
 
 function Copyright() {
   return (
@@ -49,8 +50,18 @@ export default function SignIn(props) {
 
     
     function handleSumbit(event){
-      props.handleIsAuthenticated();
+      event.preventDefault();
+      props.handleLogIn(user);
     } 
+
+    const [user,setUser] = useState({email: "", password: ""});
+
+    function handleParamChange(e){
+      const { name,value } = e.target;
+      setUser(function(prev){ 
+        return {...prev, [name]: value};
+      });
+    }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -62,7 +73,7 @@ export default function SignIn(props) {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate onSubmit={handleSumbit} >
+        <form className={classes.form} noValidate onSubmit={handleSumbit} method='POS'>
           <TextField
             variant="outlined"
             margin="normal"
@@ -73,6 +84,9 @@ export default function SignIn(props) {
             name="email"
             autoComplete="email"
             autoFocus
+            onChange={handleParamChange}
+            error={props.invalidEmail}
+            helperText={props.invalidEmail ? 'Usuario no encontrado': null}
           />
           <TextField
             variant="outlined"
@@ -84,6 +98,9 @@ export default function SignIn(props) {
             type="password"
             id="password"
             autoComplete="current-password"
+            onChange={handleParamChange}
+            error={props.invalidPassword}
+            helperText={props.invalidPassword ? 'Contraseña incorrecta': null}
           />
           <Button
             type="submit"

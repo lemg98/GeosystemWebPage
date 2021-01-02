@@ -39,3 +39,4 @@ export async function fetchBuses(choferes){
    }
    return {coords: coords, names: names};
 }
+
