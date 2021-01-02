@@ -1,7 +1,7 @@
-import React,{ useState } from 'react';
+import React,{ useEffect, useState } from 'react';
 import SignIn from '../components/SignIn';
 import AdminScreen from './AdminScreen';
-import { userSignIn,userSignOut } from '../utils/FirebaseAPI';
+import { userSignIn,userSignOut, getUserState } from '../utils/FirebaseAPI';
 
 
 export default function LoginScreen() {
@@ -11,31 +11,41 @@ export default function LoginScreen() {
    const [invalidEmail,setInvalidEmail] = useState(false);
    const [invalidPassword,setInvalidPassword] = useState(false);
 
-   function handleLogIn(user){
-      userSignIn(user,setUser,setInvalidEmail,setInvalidPassword,setIsAuthenticated, setData);
+   async function handleLogIn(user){
+      await userSignIn(user,setUser,setInvalidEmail,setInvalidPassword,setIsAuthenticated, setData);
    }
 
-   function handleSignOut(){
-      userSignOut(setUser,setIsAuthenticated);
+   async function handleSignOut(){
+      await userSignOut(setUser,setIsAuthenticated);
    }
 
-   const [isAuthenticated, setIsAuthenticated] = useState(false);
+   const [isAuthenticated, setIsAuthenticated] = useState(null);
 
+   const [onLoad,setOnLoad] = useState(true);
 
-   return (
-      <div>
-         { !isAuthenticated ? 
-            <SignIn 
-               handleLogIn={handleLogIn}
-               invalidEmail={invalidEmail}
-               invalidPassword={invalidPassword}
-            /> 
-            : 
-            <AdminScreen 
-               userFirebase={user} 
-               userData={data}
-               handleSignOut={handleSignOut}
-            /> } 
-      </div>
-   );
+   useEffect(async function(){
+      await getUserState(setData,setIsAuthenticated);
+      setOnLoad(false);
+   },[]);
+
+   if(!onLoad && isAuthenticated !== null){
+      return (
+         <div>            
+            {!isAuthenticated ? 
+               <SignIn 
+                  handleLogIn={handleLogIn}
+                  invalidEmail={invalidEmail}
+                  invalidPassword={invalidPassword}
+               /> 
+               : 
+               <AdminScreen 
+                  userFirebase={user} 
+                  userData={data}
+                  handleSignOut={handleSignOut}
+               />  
+            }
+         </div>
+      );
+   }
+   else return null;
 }

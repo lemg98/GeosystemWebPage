@@ -1,7 +1,7 @@
-import React from "react";
+import React, {useEffect} from "react";
 import MapScreen from "./MapScreen";
 
-export default function AdminScreen(props){
+export default function AdminScreen(props){   
    return (
       <div>
             <MapScreen 
